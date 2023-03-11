@@ -1,0 +1,12 @@
+*.key
+*.png
+*.jpg
+*.msh
+*.stp
+*.step
+*.STEP
+*.stl
+*.geo_unrolled
+*.bdf
+__pycache__
+.DS_Store
