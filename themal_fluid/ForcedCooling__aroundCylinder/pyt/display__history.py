@@ -10,7 +10,7 @@ import nkUtilities.configSettings as cfs
 # ========================================================= #
 def display__temperature():
 
-    x_,y_   = 0, 1
+    x_,y1_,y2_   = 0, 1, 2
 
     # ------------------------------------------------- #
     # --- [1] Arguments                             --- #
@@ -31,23 +31,33 @@ def display__temperature():
     cfs.configSettings( configType="plot1D_def", config=config )
     config["xTitle"]         = "Number of iterations"
     config["yTitle"]         = "Temperature (" + r"$^\circ$" + "C)"
-    config["plt_position"]   = [ 0.18, 0.18, 0.94,0.94]
-    config["FigSize"]        = (5.0,5.0)
+    config["plt_position"]   = [ 0.12, 0.18, 0.88,0.94]
+    config["FigSize"]        = (6.0,5.0)
     config["plt_xAutoRange"] = False
     config["plt_yAutoRange"] = False
     config["plt_xRange"]     = [    0, 10  ]
-    config["plt_yRange"]     = [ 280, 380  ]
+    config["plt_yRange"]     = [ 290, 360  ]
     config["xMajor_Nticks"]  = 11
-    config["yMajor_Nticks"]  = 11
+    config["yMajor_Nticks"]  =  8
     config["plt_linewidth"]  = 1.0
     config["plt_linestyle"]  = "-"
     config["xMinor_sw"]      = False
+    config["ax2.ylog"]       = True
+    config["ax2.yTitle"]     = "convergence"
+    config["ax2.yMajor.auto"] = False
+    config["ax2.yMajor.ticks"] = [ 10.0**(ik) for ik in np.linspace( -6, +1, 8 ) ]
+    config["ax2.yAutoRange"]   = False
+    config["ax2.yRange"]       = [ 1.e-6, 1.e+1 ]
 
     # ------------------------------------------------- #
     # --- [4] plot Figure                           --- #
     # ------------------------------------------------- #
     fig = pl1.plot1D( config=config, pngFile=pngFile )
-    fig.add__plot( xAxis=Data[:,x_], yAxis=Data[:,y_], color="orange", marker="o" )
+    import matplotlib.pyplot as plt
+    colors = plt.get_cmap()
+    print( colors(0) )
+    fig.add__plot ( xAxis=Data[:,x_], yAxis=Data[:,y1_], color="C0", marker="o" )
+    fig.add__plot2( xAxis=Data[:,x_], yAxis=Data[:,y2_], color="C1", marker="o" )
     fig.set__axis()
     fig.save__figure()
 
@@ -132,7 +142,7 @@ def display__viscosity_thermalConductivity():
     # ------------------------------------------------- #
     cfs.configSettings( configType="plot1D_def", config=config )
     config["xTitle"]         = "Temperature (" + r"$^\circ$" + "C)"
-    config["yTitle"]         = "viscosity " + r"$\mathrm{(m^2/s)}$"
+    config["yTitle"]         = "viscosity " + r"$\nu \ \mathrm{(m^2/s)}$"
     config["plt_position"]   = [ 0.18, 0.18, 0.94,0.94]
     config["FigSize"]        = (5.0,5.0)
     config["plt_xAutoRange"] = False
@@ -228,6 +238,6 @@ def display__HilpertCoeff():
 # ======================================== #
 if ( __name__=="__main__" ):
     # display__residuals()
-    # display__temperature()
+    display__temperature()
     # display__viscosity_thermalConductivity()
-    display__HilpertCoeff()
+    # display__HilpertCoeff()
