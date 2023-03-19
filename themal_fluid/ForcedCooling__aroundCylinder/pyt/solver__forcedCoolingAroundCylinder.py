@@ -99,6 +99,7 @@ def main( parameterFile=None ):
     # ------------------------------------------------- #
     # --- [2] Main Loop                             --- #
     # ------------------------------------------------- #
+    convergence_history = []
     for ik in range( params["control.iterMax"] ):
 
         # ------------------------------------------------- #
@@ -124,12 +125,13 @@ def main( parameterFile=None ):
         # --- [4-3] check convergence                   --- #
         # ------------------------------------------------- #
         residual = np.abs( params["target.T"] - params["target.Told"] ) / ( params["target.Told"] )
+        convergence_history += [ [ ik+1, params["target.T"], residual ] ]
         if ( residual < params["control.maxResidual"] ):
             converged = True
             print( "\n" + "="*90 )
-            print( " Reach convergence.   at #. of iteration :: {}".format( ik ) )
+            print( " Reach convergence.   at #. of iteration :: {}".format( ik+1 ) )
             print( "="*90 + "\n" )
-            print( " ( iteration, temperature, residual ) == ( {0:8}, {1:10.4f}, {2:10.4e} )".format( ik, params["target.T"], residual ) )
+            print( " ( iteration, temperature, residual ) == ( {0:8}, {1:10.4f}, {2:10.4e} )".format( ik+1, params["target.T"], residual ) )
             display__variables( params=params )
             print( "\n" + "="*90 + "\n" )
             break
@@ -139,17 +141,24 @@ def main( parameterFile=None ):
         # ------------------------------------------------- #
         if ( params["control.verbose"] ):
             print( "\n" + "-"*80 )
-            print( " iteration :: {}".format( ik ) )
+            print( " iteration :: {}".format( ik+1 ) )
             print( "-"*80 + "\n" )
-            print( " ( iteration, temperature, residual ) == ( {0:8}, {1:10.4f}, {2:10.4f} )".format( ik, params["target.T"], residual ) )
+            print( " ( iteration, temperature, residual ) == ( {0:8}, {1:10.4f}, {2:10.4f} )".format( ik+1, params["target.T"], residual ) )
             display__variables( params=params )
             print( "\n" + "-"*80 + "\n" )
         else:
-            print( " ( iteration, temperature, residual ) == ( {0:8}, {1:10.4f}, {2:10.4f} )".format( ik, params["target.T"], residual ) )
+            print( " ( iteration, temperature, residual ) == ( {0:8}, {1:10.4f}, {2:10.4f} )".format( ik+1, params["target.T"], residual ) )
             
     if ( not( converged ) ):
         print( "\n" + "[solver__forcedCoolingAroundCylinder.py] does not converged... [CAUTION] " + "\n" )
-            
+        sys.exit( "[ERROR] end..." )
+    else:
+        import nkUtilities.save__pointFile as spf
+        outFile   = "dat/residuals.dat"
+        names     = ["iteration","temperature", "residual"]
+        spf.save__pointFile( outFile=outFile, Data=convergence_history, names=names )
+
+    
 
 # ========================================================= #
 # ===   Execution of Pragram                            === #
