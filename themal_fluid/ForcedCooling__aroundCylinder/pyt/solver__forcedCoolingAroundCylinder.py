@@ -103,6 +103,7 @@ def main( parameterFile=None ):
     # --- [2] Main Loop                             --- #
     # ------------------------------------------------- #
     convergence_history  = []
+    converged            = False
     # convergence_history += [ [ 0, params["target.T"], 0.0 ] ]
     for ik in range( params["control.iterMax"] ):
 
@@ -155,13 +156,13 @@ def main( parameterFile=None ):
             
     if ( not( converged ) ):
         print( "\n" + "[solver__forcedCoolingAroundCylinder.py] does not converged... [CAUTION] " + "\n" )
-        sys.exit( "[ERROR] end..." )
+        return( ( 0.0, 0.0, 0.0 ) )
     else:
         import nkUtilities.save__pointFile as spf
         outFile   = "dat/residuals.dat"
         names     = ["iteration","temperature", "residual"]
         spf.save__pointFile( outFile=outFile, Data=convergence_history, names=names )
-
+    return( ( ik+1, params["target.T"], residual ) )
     
 
 # ========================================================= #
