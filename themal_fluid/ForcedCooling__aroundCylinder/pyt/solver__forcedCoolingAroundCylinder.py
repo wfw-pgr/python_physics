@@ -18,7 +18,10 @@ def prepare__parameters( inpFile="dat/parameter.conf" ):
     # ------------------------------------------------- #
     # --- [2] calculate dependent variables         --- #
     # ------------------------------------------------- #
-    params["pipe.area"]       = params["pipe.diameter"]**2 * np.pi / 4
+    if   ( params["control.cooling.area"] == "pipe.diameter" ):
+        params["pipe.area"]       = params["pipe.diameter"]**2 * np.pi / 4
+    elif ( params["control.cooling.area"] == "target.and.pipe.size"   ):
+        params["pipe.area"]       = params["pipe.diameter"] * params["target.length"]
     params["pipe.flow.m3_s"]  = params["pipe.flow.L_min"] * 1e-3 / 60.0
     params["fluid.velocity"]  = params["pipe.flow.m3_s"] / params["pipe.area"]
     params["target.area"]     = 2.0*( np.pi / 4 * params["target.diameter"]**2 ) + np.pi * params["target.diameter"] * params["target.length"]
@@ -99,7 +102,8 @@ def main( parameterFile=None ):
     # ------------------------------------------------- #
     # --- [2] Main Loop                             --- #
     # ------------------------------------------------- #
-    convergence_history = []
+    convergence_history  = []
+    # convergence_history += [ [ 0, params["target.T"], 0.0 ] ]
     for ik in range( params["control.iterMax"] ):
 
         # ------------------------------------------------- #
