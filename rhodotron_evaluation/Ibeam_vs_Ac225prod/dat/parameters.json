@@ -1,0 +1,17 @@
+{
+    "powerAxisRange":[ 0.0, 150.0e3, 101 ],
+    "Linac":{
+	"efficiency":1.71e-5, 
+	"power":10.5e3, 
+	"Energy":35.0e6,
+	"Ra-226":37.0e9,
+	"duration_day":6.0
+    },
+    "Rhodotron":{
+	"efficiency":8.36e-7, 
+	"power":125.0e3, 
+	"Energy":40.0e6,
+	"Ra-226":37.0e9,
+	"duration_day":6.0
+    }
+}
