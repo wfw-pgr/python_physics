@@ -69,6 +69,7 @@ def calculate__coolingCapacityOfWater( paramFile=None ):
     config["yTitle"]         = "P (kW)"
     fig     = pl1.plot1D( config=config, pngFile=pngFile )
     fig.add__plot( xAxis=u_var, yAxis=Q_var )
+    fig.add__cursor( yAxis=125.0, linestyle="--", color="red", linewidth=1.5 )
     fig.set__axis()
     fig.save__figure()
 
