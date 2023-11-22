@@ -1,0 +1,8 @@
+{
+    "Zs":[42,73,78,79,92], 
+    "Emin":0.0, 
+    "Emax":50.0, 
+    "nE":101,
+    "energyMode":"linspace",
+    "energyList":[]
+}
