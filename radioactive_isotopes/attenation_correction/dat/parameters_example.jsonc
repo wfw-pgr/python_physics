@@ -1,0 +1,16 @@
+{
+    
+    "halflife1": 14.9, 
+    "halflife2": 9.9,
+    "halflife1.unit":"d",
+    "halflife2.unit":"d",
+    "outFile":"dat/results.dat", 
+    "pngFile":"png/attenation_correction.png", 
+    "T.beam.start":"2023-12-22 22:40:00", 
+    "T.beam.end":"2023-12-23 04:40:00", 
+    "T.HPGe.start": "2024-01-10 20:00:00",
+    "T.HPGe.end": "2024-01-11 10:00:00",
+    "graph.time.MinMaxNum":[0.0,30.0,101],
+    "graph.time.unit":"d"
+    
+}
